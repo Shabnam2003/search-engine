@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="835.0" prefWidth="1535.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.searchengine.HelloController">
+   <children>
+      <TextField fx:id="text" layoutX="32.0" layoutY="67.0" onAction="#showResult" prefHeight="62.0" prefWidth="1463.0">
+         <font>
+            <Font size="44.0" />
+         </font></TextField>
+      <TextArea fx:id="result" layoutX="29.0" layoutY="147.0" prefHeight="666.0" prefWidth="1469.0" wrapText="true">
+         <font>
+            <Font size="44.0" />
+         </font></TextArea>
+   </children>
+</AnchorPane>
