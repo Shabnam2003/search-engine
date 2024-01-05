@@ -47,6 +47,7 @@ public class FindWord {
             andOperation(andList);
         }
 
+        if (this.result.isEmpty())throw new NullPointerException();
         return this.result.toString();
     }
 

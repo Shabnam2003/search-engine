@@ -26,8 +26,9 @@ public class HelloController {
         try {
             FindWord findWord = new FindWord(text.getText(), this.map);
             result.setText(findWord.searching());
+            result.setVisible(true);
         } catch (NullPointerException nullPointerException) {
-            result.setText("");
+            result.setVisible(false);
         }
     }
 

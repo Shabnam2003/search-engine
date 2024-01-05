@@ -2,18 +2,32 @@
 
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="835.0" prefWidth="1535.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.searchengine.HelloController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="835.0" prefWidth="1244.0" style="-fx-background-image: ..\..\..\1212024.jpg;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.searchengine.HelloController">
    <children>
-      <TextField fx:id="text" layoutX="32.0" layoutY="67.0" onAction="#showResult" prefHeight="62.0" prefWidth="1463.0">
+      <ImageView fitHeight="855.0" fitWidth="1486.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../desktop-wallpaper-san-francisco-cable-car-heaven-houses-city-cars-artwork-painting-street.jpg" />
+         </image>
+      </ImageView>
+      <TextField fx:id="text" layoutX="271.0" layoutY="175.0" onAction="#showResult" opacity="0.7" prefHeight="88.0" prefWidth="682.0" promptText="Search here!" style="-fx-background-color: #CCD1D1; -fx-border-color: #000000; -fx-border-radius: 300; -fx-background-radius: 300;">
          <font>
-            <Font size="44.0" />
-         </font></TextField>
-      <TextArea fx:id="result" layoutX="29.0" layoutY="147.0" prefHeight="666.0" prefWidth="1469.0" wrapText="true">
+            <Font size="36.0" />
+         </font>
+      </TextField>
+      <ImageView fitHeight="57.0" fitWidth="57.0" layoutX="871.0" layoutY="190.0" onMouseClicked="#showResult">
+         <image>
+            <Image url="@../../../795724.png" />
+         </image>
+      </ImageView>
+      <TextArea fx:id="result" layoutX="111.0" layoutY="374.0" opacity="0.55" prefHeight="349.0" prefWidth="1002.0" visible="false" wrapText="true">
          <font>
-            <Font size="44.0" />
-         </font></TextArea>
+            <Font size="36.0" />
+         </font>
+      </TextArea>
    </children>
 </AnchorPane>
