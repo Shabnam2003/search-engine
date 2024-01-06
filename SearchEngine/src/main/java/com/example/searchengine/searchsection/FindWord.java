@@ -5,6 +5,7 @@ import java.util.*;
 public class FindWord {
     String sentence;
     CompleteMap map;
+    int counter;
     Set<String> result = new LinkedHashSet<>();
 
     public FindWord(String sentence, CompleteMap map) {
@@ -13,46 +14,67 @@ public class FindWord {
     }
 
     public String searching() throws NullPointerException {
+        this.sentence = this.sentence.toLowerCase();
 
-        LinkedList<String> andList = new LinkedList<>();
+        String[] search = this.sentence.split(" ");
 
-        if (!this.sentence.contains("-") && !this.sentence.contains("+")) {
-            this.result.add(this.map.wordMap.get(this.sentence).toString());       //exact word
-        }
-        else if (!this.sentence.contains("-") && this.sentence.contains("+")) {
-            String[] str = this.sentence.split("\\+");          //spilt and "or"
+        StringBuilder orString = new StringBuilder();
+        Set<String> andList = new HashSet<>();
 
-            for (String string : str) {
-                this.result.add(this.map.wordMap.get(string).toString());
-            }
-        }
-        else {
-            String[] plusSpilt = this.sentence.split("\\+");        //spilt by +
 
-            for (String string : plusSpilt) {
-                if (string.contains("-")) {
-                    String[] minusSpilt = string.split("-");          //spilt by -
-
-                    if (!Objects.equals(minusSpilt[0], "")) {      //if not started with -
-                        andList.add(this.map.wordMap.get(minusSpilt[0]).toString());
+        for (int i = 0; i < search.length; i++) {
+            if (search[i].contains("-")) {
+                //make not
+                if (!CompleteMap.ignoredWords.contains(search[i].substring(1))) {
+                    try {
+                        String res = this.map.createNotWord(search[i].substring(1));
+                        andList.add(res);
+                    } catch (NullPointerException ignored) {
                     }
-                    for (int i = 1; i < minusSpilt.length; i++) {
-                        andList.add(this.map.createNotWord(minusSpilt[i]));
-                    }
-                } else {
-                    andList.add(this.map.wordMap.get(string).toString());
                 }
+                search[i] = null;                      //remove words those are not important
             }
-
-            andOperation(andList);
         }
 
-        if (this.result.isEmpty())throw new NullPointerException();
-        return this.result.toString();
+        for (int i = 0; i < search.length; i++) {                       //spilt and sentences
+            if (search[i] != null && search[i].contains("+")) {
+                if (!CompleteMap.ignoredWords.contains(search[i].substring(1))) {         //remove words those are not important
+                    try {
+                        String res = this.map.wordMap.get(search[i].substring(1)).toString();
+                        orString.append(res);
+                    } catch (NullPointerException ignored) {
+                    }
+                }                                                                                              //make orString
+                search[i] = null;
+            }
+        }
+
+        for (String s : search) {
+            //fill andList
+            if (CompleteMap.ignoredWords.contains(s))
+                s = null;                      //remove words those are not important
+            if (s != null) {
+                andList.add(this.map.wordMap.get(s).toString());
+            }
+        }
+        Set<String> andRes = new HashSet<>();
+        if (andList.size() != 0) {
+            andRes=andOperation(andList);
+            if (orString.length() != 0) showRes(andRes, orString.toString());
+            else this.result = andRes;
+            this.counter = this.result.size();
+        } else {
+            this.result = Set.of(String.valueOf(orString));
+            this.counter = orString.length();
+        }
+
+        return this.counter + "\n" + this.result;
     }
 
-    void andOperation(LinkedList<String> andList) {
-        String[] values = andList.get(0).split(", ");     //spilt
+    Set<String> andOperation(Set<String> andList) {
+        String[] values = andList.stream().toList().get(0).split(", ");     //spilt
+
+        Set<String> andResult = new HashSet<>();
 
         for (String value : values) {
             boolean find = true;
@@ -64,7 +86,15 @@ public class FindWord {
                 }
             }
 
-            if (find) this.result.add(value);    //if all of them has it,add to result
+            if (find) andResult.add(value);    //if all of them has it,add to result
+        }
+        return andResult;
+    }
+
+    void showRes(Set<String> andList, String orList) {
+        for (String s : andList) {
+            if (orList.contains(s)) this.result.add(s);
         }
     }
+
 }

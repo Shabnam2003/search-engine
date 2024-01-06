@@ -5,7 +5,7 @@ import java.util.*;
 
 public class CompleteMap {
     public Map<String, StringBuilder> wordMap = new HashMap<>();
-    static List<String> ignoredWords = new ArrayList<>();   //words those are in any text
+    public static List<String> ignoredWords = new ArrayList<>();   //words those are in any text
     final File folder = new File("D:\\data structures\\search-engine-Shabnam2003\\EnglishData");
     File[] files;
     List<String> fileNames = new ArrayList<>();
@@ -23,6 +23,7 @@ public class CompleteMap {
         ignoredWords.add("this");
         ignoredWords.add("that");
         ignoredWords.add("those");
+        ignoredWords.add("any");
 
         readFiles();
     }
@@ -37,7 +38,7 @@ public class CompleteMap {
         String line;
 
         while ((line = bufferedReader.readLine()) != null) {
-                                                          // Remove punctuation marks using regular expressions
+            // Remove punctuation marks using regular expressions
             String modifiedLine = line.replaceAll("\\p{Punct}", "");
             content.append(modifiedLine).append("\n");
         }
@@ -77,11 +78,11 @@ public class CompleteMap {
     }
 
     public String createNotWord(String key) {
-        StringBuilder notVal=new StringBuilder();
-        String val = this.wordMap.get(key).toString();      //find files those are contains the key
+        StringBuilder notVal = new StringBuilder();
+        String val = this.wordMap.get( key.substring(1)).toString();      //find files those are contains the key
 
         for (String name : this.fileNames) {
-            if (!val.contains(name)){                         //add others to the string
+            if (!val.contains(name)) {                         //add others to the string
                 notVal.append(name).append(", ");
             }
         }
