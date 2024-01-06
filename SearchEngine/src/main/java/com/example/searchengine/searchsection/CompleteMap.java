@@ -24,6 +24,7 @@ public class CompleteMap {
         ignoredWords.add("that");
         ignoredWords.add("those");
         ignoredWords.add("any");
+        ignoredWords.add("to");
 
         readFiles();
     }
