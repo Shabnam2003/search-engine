@@ -25,6 +25,7 @@ public class CompleteMap {
         ignoredWords.add("those");
         ignoredWords.add("any");
         ignoredWords.add("to");
+        ignoredWords.add("at");
 
         readFiles();
     }
@@ -40,7 +41,7 @@ public class CompleteMap {
 
         while ((line = bufferedReader.readLine()) != null) {
             // Remove punctuation marks using regular expressions
-            String modifiedLine = line.replaceAll("\\p{Punct}", "");
+            String modifiedLine = line.replaceAll("\\p{Punct}", " ");
             content.append(modifiedLine).append("\n");
         }
 
