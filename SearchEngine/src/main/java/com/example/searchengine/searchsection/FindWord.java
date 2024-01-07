@@ -21,48 +21,18 @@ public class FindWord {
         StringBuilder orString = new StringBuilder();
         Set<String> andList = new HashSet<>();
 
+        notMaker(search,andList);
+        orMaker(search,orString);
+        andMaker(search,andList);
 
-        for (int i = 0; i < search.length; i++) {
-            if (search[i].contains("-")) {
-                //make not
-                if (!CompleteMap.ignoredWords.contains(search[i].substring(1))) {
-                    try {
-                        String res = this.map.createNotWord(search[i].substring(1));
-                        andList.add(res);
-                    } catch (NullPointerException ignored) {
-                    }
-                }
-                search[i] = null;                      //remove words those are not important
-            }
-        }
 
-        for (int i = 0; i < search.length; i++) {                       //spilt and sentences
-            if (search[i] != null && search[i].contains("+")) {
-                if (!CompleteMap.ignoredWords.contains(search[i].substring(1))) {         //remove words those are not important
-                    try {
-                        String res = this.map.wordMap.get(search[i].substring(1)).toString();
-                        orString.append(res);
-                    } catch (NullPointerException ignored) {
-                    }
-                }                                                                                              //make orString
-                search[i] = null;
-            }
-        }
-
-        for (String s : search) {
-            //fill andList
-            if (CompleteMap.ignoredWords.contains(s))
-                s = null;                      //remove words those are not important
-            if (s != null) {
-                andList.add(this.map.wordMap.get(s).toString());
-            }
-        }
-        Set<String> andRes = new HashSet<>();
+        Set<String> andRes ;
         if (andList.size() != 0) {
             andRes=andOperation(andList);
             if (orString.length() != 0) showRes(andRes, orString.toString());
             else this.result = andRes;
             this.counter = this.result.size();
+
         } else {
             this.result = Set.of(String.valueOf(orString));
             this.counter = orString.length();
@@ -94,6 +64,49 @@ public class FindWord {
     void showRes(Set<String> andList, String orList) {
         for (String s : andList) {
             if (orList.contains(s)) this.result.add(s);
+        }
+    }
+
+    void notMaker(String[] search, Set<String> andList){
+        for (int i = 0; i < search.length; i++) {
+            if (search[i].contains("-")) {
+                //make not
+                if (!CompleteMap.ignoredWords.contains(search[i].substring(1))) {
+                    try {
+                        String res = this.map.createNotWord(search[i].substring(1));
+                        andList.add(res);
+                    } catch (NullPointerException ignored) {
+                    }
+                }
+                search[i] = null;                      //remove words those are not important
+            }
+        }
+    }
+
+
+    void orMaker(String[] search, StringBuilder orString){
+        for (int i = 0; i < search.length; i++) {                       //spilt and sentences
+            if (search[i] != null && search[i].contains("+")) {
+                if (!CompleteMap.ignoredWords.contains(search[i].substring(1))) {         //remove words those are not important
+                    try {
+                        String res = this.map.wordMap.get(search[i].substring(1)).toString();
+                        orString.append(res);
+                    } catch (NullPointerException ignored) {
+                    }
+                }                                                                                              //make orString
+                search[i] = null;
+            }
+        }
+    }
+
+    void andMaker(String[] search, Set<String> andList){
+        for (String s : search) {
+            //fill andList
+            if (CompleteMap.ignoredWords.contains(s))
+                s = null;                      //remove words those are not important
+            if (s != null) {
+                andList.add(this.map.wordMap.get(s).toString());
+            }
         }
     }
 

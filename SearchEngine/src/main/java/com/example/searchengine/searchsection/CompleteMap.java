@@ -17,6 +17,8 @@ public class CompleteMap {
         ignoredWords.add("an");
         ignoredWords.add("a");
         ignoredWords.add("the");
+        ignoredWords.add("and");
+        ignoredWords.add("or");
         ignoredWords.add("in");
         ignoredWords.add("on");
         ignoredWords.add("there");
@@ -26,6 +28,11 @@ public class CompleteMap {
         ignoredWords.add("any");
         ignoredWords.add("to");
         ignoredWords.add("at");
+        ignoredWords.add("of");
+        ignoredWords.add("for");
+        ignoredWords.add("was");
+        ignoredWords.add("were");
+        ignoredWords.add("with");
 
         readFiles();
     }
@@ -64,7 +71,7 @@ public class CompleteMap {
         String[] text = removeSigns(file).split(" ");             //spilt text
 
         for (String s : text) {
-            if (!ignoredWords.contains(s)) {
+            if (!ignoredWords.contains(s) && !Objects.equals(s, "") && s.length()!=1) {
 
                 StringBuilder val = this.wordMap.get(s);
 
@@ -81,7 +88,7 @@ public class CompleteMap {
 
     public String createNotWord(String key) {
         StringBuilder notVal = new StringBuilder();
-        String val = this.wordMap.get( key.substring(1)).toString();      //find files those are contains the key
+        String val = this.wordMap.get(key).toString();      //find files those are contains the key
 
         for (String name : this.fileNames) {
             if (!val.contains(name)) {                         //add others to the string
